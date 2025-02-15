@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<script type="importmap">
+	  {
+	    "imports": {
+	      "three": "https://cdn.jsdelivr.net/npm/three@0.173.0/build/three.module.js",
+	      "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.173.0/examples/jsm/"
+	    }
+	  }
+	</script>
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<meta charset="UTF-8" />
+</head>
+<body style="overflow: hidden;">
+	<script type="module" src="./main.js"></script>
+	<script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/4.0.0/model-viewer.min.js"></script>
+	<div style="width: 100%; height: 100vh; overflow: hidden;">
+		<h2>Cyao's automatic case generator</h2>
+		<p>Note: You must mount the mcu on the back. Wait a while after clicking buttons. All values are absolute</p>
+	   <div style="float:left; width: 45%; height:90vh; overflow: auto;">
+		   <p style="">Keyboard plate dxf generated with <a href="https://kbplate.ai03.com/" target="_blank">ai03</a> and <a href="https://www.keyboard-layout-editor.com/" target="_blank">keyboard-layout-editor</a> (Default is a plate for my full keyboard):</p>
+		   <input type="file" id="plate" name="filename">
+
+		   <p style="">Incline angle of your keyboard:</p>
+		   <input style="display: inline-block; vertical-align:middle;" type="range" id="angle" min="0", max="89" value="6"/>
+		   <p style="display: inline-block; vertical-align:middle;"><output id="anglevalue">8</output>deg</p>
+
+		   <p style="">How much your keyboard is padded up:</p>
+		   <input style="display: inline-block; vertical-align:middle;" type="number" id="padding" value="0"/>
+
+
+		   <p style="">PCB width:</p>
+		   <input style="display: inline-block; vertical-align:middle;" type="number" id="pw" value="355"/>
+
+		   <p style="">PCB height:</p>
+		   <input style="display: inline-block; vertical-align:middle;" type="number" id="ph" value="120"/>
+
+		   <p style="">PCB has rounded corners:</p>
+		   <input style="display: inline-block; vertical-align:middle;" type="checkbox" id="pr"/>
+		   <p style="">PCB has round corner radius in mm (if any):</p>
+		   <input style="display: inline-block; vertical-align:middle;" type="number" id="prr" value="5"/>
+
+		   <p style="">X offset to the MIDDLE of your USB port from the top left of the PCB:</p>
+		   <input style="display: inline-block; vertical-align:middle;" type="number" id="uw" value="354.97"/>
+
+		   <p style="">Y offset to the MIDDLE of USB:</p>
+		   <input style="display: inline-block; vertical-align:middle;" type="number" id="uh" value="11.71"/>
+
+		   <p style="">Is the USB ports on the side of the case?</p>
+		   <input style="display: inline-block; vertical-align:middle;" type="checkbox" id="ut" checked/>
+
+		   <p style="">X offset from the top left of PCB to the top left of your keys:</p>
+		   <input style="display: inline-block; vertical-align:middle;" type="number" id="ox" value="4.119"/>
+
+		   <p style="">Y offset from the top left of PCB to the top left of your keys:</p>
+		   <input style="display: inline-block; vertical-align:middle;" type="number" id="oy" value="4.015"/>
+
+		   <p style="">Height of your keys (X size):</p>
+		   <input style="display: inline-block; vertical-align:middle;" type="number" id="wx" value="347.66"/>
+
+		   <p style="">Width of your keys (Y size):</p>
+		   <input style="display: inline-block; vertical-align:middle;" type="number" id="wy" value="114.3"/>
+
+		   <p style="">Fillet top edge? (Don't select both fillet and chamfer)</p>
+		   <input style="display: inline-block; vertical-align:middle;" type="checkbox" id="fl"/>
+
+		   <p style="">Fillet radius (if fillet):</p>
+		   <input style="display: inline-block; vertical-align:middle;" type="number" id="flr" value="2"/>
+
+		   <p style="">Chamfer top edge?</p>
+		   <input style="display: inline-block; vertical-align:middle;" type="checkbox" id="ch" checked/>
+
+		   <p style="">Chamfer angle:</p>
+		   <input style="display: inline-block; vertical-align:middle;" type="number" id="chan" value="22"/>
+
+		   <p style="">Chamfer ammount:</p>
+		   <input style="display: inline-block; vertical-align:middle;" type="number" id="cham" value="1.5"/>
+
+		   <p style="">Fillet support edges? (Don't select both fillet and chamfer)</p>
+		   <input style="display: inline-block; vertical-align:middle;" type="checkbox" id="sfl" checked/>
+
+		   <p style="">Fillet radius (if fillet):</p>
+		   <input style="display: inline-block; vertical-align:middle;" type="number" id="sflr" value="5"/>
+
+		   <p style="">Chamfer support edges?</p>
+		   <input style="display: inline-block; vertical-align:middle;" type="checkbox" id="sch"/>
+
+		   <p style="">Chamfer ammount:</p>
+		   <input style="display: inline-block; vertical-align:middle;" type="number" id="scham" value="1.5"/>
+
+		   <p style="">How much smaller should the support be then the keyboard:</p>
+		   <input style="display: inline-block; vertical-align:middle;" type="number" id="ss" value="8"/>
+
+		   <p style="">Make oled hole?</p>
+		   <input style="display: inline-block; vertical-align:middle;" type="checkbox" id="oh" checked/>
+
+		   <p style="">Oled width (this is the default for a 0.91" oled):</p>
+		   <input style="display: inline-block; vertical-align:middle;" type="number" id="ohw" value="27"/>
+		   <p style="">Oled height:</p>
+		   <input style="display: inline-block; vertical-align:middle;" type="number" id="ohh" value="11.5"/>
+		   <p style="">Oled x offset from the top left:</p>
+		   <input style="display: inline-block; vertical-align:middle;" type="number" id="ohx" value="300.9"/>
+		   <p style="">Oled y offset from the top left:</p>
+		   <input style="display: inline-block; vertical-align:middle;" type="number" id="ohy" value="4.56"/>
+
+		   <h4>Advanced area</h4>
+
+		   <p style="">Case wall thickness:</p>
+		   <input style="display: inline-block; vertical-align:middle;" type="number" id="wt" value="7"/>
+
+		   <p style="">How much heigher should the edges of the keys be:</p>
+		   <input style="display: inline-block; vertical-align:middle;" type="number" id="ext" value="5"/>
+		   <p style="display: none;">How much space between the pcb and bottom of the case (2.9 for low flex, 4 for high flex):</p>
+		   <input style="display: none; vertical-align:middle;" type="number" id="flex" value="3.2"/>
+		   <p style="">PCB thickness:</p>
+		   <input style="display: inline-block; vertical-align:middle;" type="number" id="pcbt" value="1.6"/>
+		   <p style="">Plate thickness:</p>
+		   <input style="display: inline-block; vertical-align:middle;" type="number" id="plat" value="1.5"/>
+
+		   <p style="">USB cutout width:</p>
+		   <input style="display: inline-block; vertical-align:middle;" type="number" id="usbw" value="15"/>
+		   <p style="">USB cutout width:</p>
+		   <input style="display: inline-block; vertical-align:middle;" type="number" id="usbh" value="7"/>
+
+		   <br>
+		   <br>
+		   <button id="render">Render</button>
+		   <button id="gplate">Generate Plate</button>
+		   <button id="gcase">Generate Case</button>
+		   <br>
+		   <p>Thx for comming!</p>
+	   </div>
+	   <div style="float:right; width:54%; height:90vh;">
+		<model-viewer style="width:100%; height: 100vh;" alt="Case preview" auto-rotate ar camera-controls touch-action="pan-y"></model-viewer>
+	   </div>
+	</div>
+	<script>
+		const value = document.querySelector("#anglevalue");
+		const input = document.querySelector("#angle");
+		value.textContent = input.value;
+		input.addEventListener("input", (event) => {
+		  value.textContent = event.target.value;
+		});
+	</script>
+</body>
+</html>
