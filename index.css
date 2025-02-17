@@ -1,0 +1,48 @@
+div#main {
+	text-align: center;
+}
+
+div#content {
+	text-align: left;
+}
+
+html, body {
+	height: 100%;
+	overflow: auto;
+	margin-left: 20;
+	background-image: linear-gradient(#AAC9E1, #8FAFD7);
+}
+
+input {
+	border: 2px solid black;
+	border-radius: 4px;
+}
+
+.hovertext {
+  position: relative;
+  border-bottom: 1px dotted black;
+}
+
+.hovertext:before {
+  content: attr(data-hover);
+  visibility: hidden;
+  opacity: 0;
+  width: 140px;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  border-radius: 5px;
+  padding: 5px 0;
+  transition: opacity 0.2s ease-in-out;
+
+  position: absolute;
+  z-index: 1;
+  left: 0;
+  top: 110%;
+}
+
+.hovertext:hover:before {
+  opacity: 1;
+  visibility: visible;
+}
+

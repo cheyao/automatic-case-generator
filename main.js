@@ -22,16 +22,16 @@ async function getData(url) {
 async function generate(input) {
 	const instance = await OpenSCAD({noInitialRun: true});
 
-	const plateCode = await getData("https://raw.githack.com/cheyao/aniboard/main/CAD/plate.scad");
-	const caseCode = await getData("https://raw.githack.com/cheyao/aniboard/main/CAD/case.scad");
-	const assemblyCode = await getData("https://raw.githack.com/cheyao/aniboard/main/CAD/assembly.scad");
-	const constantsCode = await getData("https://raw.githack.com/revarbat/BOSL/master/constants.scad");
-	const shapesCode = await getData("https://raw.githack.com/revarbat/BOSL/master/shapes.scad");
-	const mathCode = await getData("https://raw.githack.com/revarbat/BOSL/master/math.scad");
-	const compatCode = await getData("https://raw.githack.com/revarbat/BOSL/master/compat.scad");
-	const transformsCode = await getData("https://raw.githack.com/revarbat/BOSL/master/transforms.scad");
+	const plateCode = await getData("https://raw.githack.com/cheyao/aniboard/0094bc2103ff533dc6f5fb4d33d112d287c0e14a/CAD/plate.scad");
+	const caseCode = await getData("https://raw.githack.com/cheyao/aniboard/0094bc2103ff533dc6f5fb4d33d112d287c0e14a/CAD/case.scad");
+	const assemblyCode = await getData("https://rawcdn.githack.com/cheyao/aniboard/0094bc2103ff533dc6f5fb4d33d112d287c0e14a/CAD/assembly.scad");
+	const constantsCode = await getData("https://raw.githack.com/revarbat/BOSL/4ce427a8a38786e5f74b728c1e33d9fe7d4904d2/constants.scad");
+	const shapesCode = await getData("https://raw.githack.com/revarbat/BOSL/4ce427a8a38786e5f74b728c1e33d9fe7d4904d2/shapes.scad");
+	const mathCode = await getData("https://raw.githack.com/revarbat/BOSL/4ce427a8a38786e5f74b728c1e33d9fe7d4904d2/math.scad");
+	const compatCode = await getData("https://raw.githack.com/revarbat/BOSL/4ce427a8a38786e5f74b728c1e33d9fe7d4904d2/compat.scad");
+	const transformsCode = await getData("https://raw.githack.com/revarbat/BOSL/4ce427a8a38786e5f74b728c1e33d9fe7d4904d2/transforms.scad");
 
-	let plateDxf = await getData("https://raw.githack.com/cheyao/aniboard/main/CAD/plate.dxf");
+	let plateDxf = await getData("https://raw.githack.com/cheyao/aniboard/0094bc2103ff533dc6f5fb4d33d112d287c0e14a/CAD/plate.dxf");
 	if (document.getElementById("plate").files[0]) {
 		plateDxf = await getData(URL.createObjectURL(document.getElementById("plate").files[0]));
 	}
@@ -139,6 +139,13 @@ function rrender(file, dl = false, dlname="") {
 		const blob = new Blob([output], { type: 'application/json' });
 		const url = URL.createObjectURL(blob);
 
+			const link = document.createElement("a");
+			link.href = url;
+			link.download = "default.gltf";
+			document.body.append(link);
+			link.click();
+			link.remove();
+
 		const modelViewer = document.querySelector("model-viewer");
 		modelViewer.src = url;
 		modelViewer.poster = "";
@@ -147,14 +154,14 @@ function rrender(file, dl = false, dlname="") {
 	});
 
 		if (dl) {
-	const output = instance.FS.readFile("/assembly.stl");
+			const output = instance.FS.readFile("/assembly.stl");
 
-	const link = document.createElement("a");
-	link.href = URL.createObjectURL(new Blob([output], { type: "application/octet-stream" }), null);
-	link.download = dlname;
-	document.body.append(link);
-	link.click();
-	link.remove();
+			const link = document.createElement("a");
+			link.href = URL.createObjectURL(new Blob([output], { type: "application/octet-stream" }), null);
+			link.download = dlname;
+			document.body.append(link);
+			link.click();
+			link.remove();
 		}
 	});
 }
